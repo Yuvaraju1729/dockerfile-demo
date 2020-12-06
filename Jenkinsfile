@@ -27,7 +27,7 @@ pipeline {
         stage('Deploying Image'){
             steps{
                 sh '''
-                    docker login -u 'yuvaraju1729' -p 'Yuvaraju@333143' 'https://hub.docker.com/'
+                    docker login -u 'yuvaraju1729' -p 'Yuvaraju@333143' 'https://index.docker.io/v1/'
                     if [ $(docker ps -qf "name=appnode") ]
                     then
                         echo "from if block"
