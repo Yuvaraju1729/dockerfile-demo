@@ -1,4 +1,4 @@
-def dockerImage=''
+def dockerImage="yuvaraju1729/build:$BUILD_NUMBER"
 pipeline {
     agent any
     stages {
@@ -9,7 +9,6 @@ pipeline {
             }
         }
         stage('Docker Build') {
-            dockerImage = "yuvaraju1729/build:$BUILD_NUMBER"
             steps {
                 sh '''
                     docker --version
