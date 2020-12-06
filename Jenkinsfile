@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        image = "yuvaraju1729/build"
+        dockerRepo = "yuvaraju1729/docker-demo"
         registryCredential = 'uv-docker-hub-creds'
         dockerImage = ''
     }
@@ -18,7 +18,7 @@ pipeline {
                 script {
                     def dockerHome = tool 'docker-runner'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    dockerImage = docker.build "yuvaraju1729/build:${BUILD_NUMBER}"
+                    dockerImage = docker.build dockerRepo+":${BUILD_NUMBER}"
                 }              
             }
         }       
