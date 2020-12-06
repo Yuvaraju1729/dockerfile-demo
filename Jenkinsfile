@@ -9,8 +9,8 @@ pipeline {
             }
         }
         stage('Docker Build') {
+            dockerImage = "yuvaraju1729/build:$BUILD_NUMBER"
             steps {
-                dockerImage = "yuvaraju1729/build:$BUILD_NUMBER"
                 sh '''
                     docker --version
                     docker build -t "${dockerImage}" .
