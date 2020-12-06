@@ -5,7 +5,6 @@ pipeline {
         dockerImage = ''
     }
     agent any
-    def app= ''
     stages {
         stage('Clone') {
             steps {
