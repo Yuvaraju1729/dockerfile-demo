@@ -6,12 +6,13 @@ pipeline {
     }
     agent any
     stages {
-        stage('Clone') {
+        /*stage('Clone') {
             steps {
                 step([$class: 'WsCleanup'])
                 checkout scm
             }
         }
+        */
         stage('Docker Build') {
             steps {
                 script {   
