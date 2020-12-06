@@ -29,22 +29,23 @@ pipeline {
                 	
                 //withCredentials([usernamePassword(credentialsId: 'uv-docker-hub-creds', passwordVariable: 'pwd', usernameVariable: 'user')]) {
                                             //docker login --username "${user}" --password "${pwd}" 'https://index.docker.io/v1/'
-
-                docker.withRegistry( '', registryCredential ) {    
-                    sh '''
-                        if [ $(docker ps -qf "name=appnode") ]
-                        then
-                            echo "from if block"
-                            docker kill appnode && docker rm appnode
-                            docker run -d -p 4321:8080 --name application "${dockerRepo}:${BUILD_NUMBER}"
-                            docker ps
-                        else
-                            echo "from else block"
-                            docker run -d -p 4321:8080 --name appnode "${dockerRepo}:${BUILD_NUMBER}"
-                            docker ps
-                        fi
-                    '''
-                }
+                script { 
+                    docker.withRegistry( '', registryCredential ) {    
+                        sh '''
+                            if [ $(docker ps -qf "name=appnode") ]
+                            then
+                                echo "from if block"
+                                docker kill appnode && docker rm appnode
+                                docker run -d -p 4321:8080 --name application "${dockerRepo}:${BUILD_NUMBER}"
+                                docker ps
+                            else
+                                echo "from else block"
+                                docker run -d -p 4321:8080 --name appnode "${dockerRepo}:${BUILD_NUMBER}"
+                                docker ps
+                            fi
+                        '''
+                    }
+                }     
             }
         }
     }
