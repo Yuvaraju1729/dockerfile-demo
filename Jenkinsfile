@@ -15,7 +15,9 @@ pipeline {
         */
         stage('Docker Build') {
             steps {
-                script {   
+                script {
+                    def dockerHome = tool 'docker-runner'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
                     dockerImage = docker.build "yuvaraju1729/build:${BUILD_NUMBER}"
                 }              
             }
