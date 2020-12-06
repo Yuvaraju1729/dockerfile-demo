@@ -27,7 +27,7 @@ pipeline {
         stage('Deploying Image'){
             steps{
                 	
-                withCredentials([usernamePassword(credentialsId: 'uv-docker-hub-creds', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+                //withCredentials([usernamePassword(credentialsId: 'uv-docker-hub-creds', passwordVariable: 'pwd', usernameVariable: 'user')]) {
                                             //docker login --username "${user}" --password "${pwd}" 'https://index.docker.io/v1/'
 
                 docker.withRegistry( '', registryCredential ) {    
