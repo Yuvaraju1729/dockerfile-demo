@@ -1,13 +1,15 @@
 pipeline {
     agent any
     stages {
-        stage('Build DockerImage') {
+        stage('Clone') {
             steps {
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
+                step([$class: 'WsCleanup'])
+                checkout scm
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                sh 'docker --version'
             }
         }
     }
