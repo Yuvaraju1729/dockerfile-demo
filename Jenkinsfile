@@ -27,7 +27,7 @@ pipeline {
         stage('Deploying Image'){
             steps{
                 	
-                withCredentials([usernameColonPassword(credentialsId: 'uv-docker-hub-creds', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+                withCredentials([usernamePassword(credentialsId: 'uv-docker-hub-creds', passwordVariable: 'pwd', usernameVariable: 'user')]) {
                     sh '''
                         docker login -u "${user}" -p "${pwd}" 'https://index.docker.io/v1/'
                         if [ $(docker ps -qf "name=appnode") ]
