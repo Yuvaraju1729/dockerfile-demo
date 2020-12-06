@@ -36,7 +36,7 @@ pipeline {
                             then
                                 echo "from if block"
                                 docker kill appnode && docker rm appnode
-                                docker run -d -p 4321:8080 --name application "${dockerRepo}:${BUILD_NUMBER}"
+                                docker run -d -p 4321:8080 --name appnode "${dockerRepo}:${BUILD_NUMBER}"
                                 docker ps
                             else
                                 echo "from else block"
