@@ -10,6 +10,9 @@ pipeline {
             steps {
                 script {
                     def dockerHome = tool 'docker-runner'
+                   
+                    sudo systemctl start docker
+                    sudo service docker start
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
                     dockerImage = docker.build dockerRepo+":${BUILD_NUMBER}"
                 }              
@@ -45,7 +48,9 @@ pipeline {
                             fi
                         '''
                     }
-                }     
+                    sudo systemctl start docker
+                    sudo service docker start
+                }
             }
         }
     }
