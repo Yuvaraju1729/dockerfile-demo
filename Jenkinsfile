@@ -48,8 +48,8 @@ pipeline {
                             fi
                         '''
                     }
-                    sudo systemctl start docker
-                    sudo service docker start
+                    sudo systemctl stop docker
+                    sudo service docker stop
                 }
             }
         }
