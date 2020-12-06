@@ -1,6 +1,11 @@
-def dockerImage="yuvaraju1729/build:$BUILD_NUMBER"
 pipeline {
+    environment {
+        image = "yuvaraju1729/build"
+        registryCredential = 'uv-docker-hub-creds'
+        dockerImage = ''
+    }
     agent any
+    def app= ''
     stages {
         stage('Clone') {
             steps {
@@ -10,10 +15,9 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh '''
-                    docker --version
-                    docker build -t "${dockerImage}" .
-                '''
+                script {   
+                    dockerImage = docker.build "yuvaraju1729/build:${BUILD_NUMBER}"
+                }              
             }
         }       
     }
