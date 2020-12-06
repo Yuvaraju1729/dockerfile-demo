@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Deploying Image'){
             steps{
-                sh """
+                sh '''
                     if [ $(docker ps -qf "name=appnode") ]
                     then
                         echo "from if block"
@@ -38,7 +38,7 @@ pipeline {
                         docker run -d -p 4321:8080 --name appnode "${registry}"
                         docker ps
                     fi
-                """
+                '''
             }
         }
     }
