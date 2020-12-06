@@ -25,19 +25,21 @@ pipeline {
           }
         }
         stage('Deploying Image'){
-            sh """
-                if [ $(docker ps -qf "name=appnode") ]
-                then
-                    echo "from if block"
-                    docker kill appnode && docker rm appnode
-                    docker run -d -p 4321:8080 --name application "${registry}"
-                    docker ps
-                else
-                    echo "from else block"
-                    docker run -d -p 4321:8080 --name appnode "${registry}"
-                    docker ps
-                fi
-            """
+            steps{
+                sh """
+                    if [ $(docker ps -qf "name=appnode") ]
+                    then
+                        echo "from if block"
+                        docker kill appnode && docker rm appnode
+                        docker run -d -p 4321:8080 --name application "${registry}"
+                        docker ps
+                    else
+                        echo "from else block"
+                        docker run -d -p 4321:8080 --name appnode "${registry}"
+                        docker ps
+                    fi
+                """
+            }
         }
     }
 }
