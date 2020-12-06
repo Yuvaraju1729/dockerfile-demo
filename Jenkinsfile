@@ -28,8 +28,10 @@ pipeline {
             steps{
                 	
                 withCredentials([usernamePassword(credentialsId: 'uv-docker-hub-creds', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+                                            //docker login --username "${user}" --password "${pwd}" 'https://index.docker.io/v1/'
+
+                docker.withRegistry( '', registryCredential ) {    
                     sh '''
-                        docker login --username "${user}" --password "${pwd}" 'https://index.docker.io/v1/'
                         if [ $(docker ps -qf "name=appnode") ]
                         then
                             echo "from if block"
