@@ -30,20 +30,25 @@ pipeline {
                 //withCredentials([usernamePassword(credentialsId: 'uv-docker-hub-creds', passwordVariable: 'pwd', usernameVariable: 'user')]) {
                                             //docker login --username "${user}" --password "${pwd}" 'https://index.docker.io/v1/'
                 script { 
-                    docker.withRegistry( '', registryCredential ) {    
-                        sh '''
-                            if [ $(docker ps -aqf "name=appnode") ]
-                            then
-                                echo "from if block"
-                                docker kill appnode && docker rm appnode
-                                docker run -d -p 4321:8080 --name appnode "${dockerRepo}:${BUILD_NUMBER}"
-                                docker ps
-                            else
-                                echo "from else block"
-                                docker run -d -p 4321:8080 --name appnode "${dockerRepo}:${BUILD_NUMBER}"
-                                docker ps
-                            fi
-                        '''
+                    try{
+                        docker.withRegistry( '', registryCredential ) {    
+                            sh '''
+                                if [ $(docker ps -aqf "name=appnode") ]
+                                then
+                                    echo "from if block"
+                                    docker kill appnode && docker rm appnode
+                                    docker run -d -p 4321:8080 --name appnode "${dockerRepo}:${BUILD_NUMBER}"
+                                    docker ps
+                                else
+                                    echo "from else block"
+                                    docker run -d -p 4321:8080 --name appnode "${dockerRepo}:${BUILD_NUMBER}"
+                                    docker ps
+                                fi
+                            '''
+                        }
+                    }
+                    catch(Exception err){
+                        echo "error in "+err.toString()
                     }
                 }
             }
