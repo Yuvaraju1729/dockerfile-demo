@@ -9,18 +9,27 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    def dockerHome = tool 'docker-runner'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    dockerImage = docker.build dockerRepo+":${BUILD_NUMBER}"
+                    try{
+                        def dockerHome = tool 'docker-runner'
+                        env.PATH = "${dockerHome}/bin:${env.PATH}"
+                        dockerImage = docker.build dockerRepo+":${BUILD_NUMBER}"
+                    }catch (Execption err){
+                      echo "problem in building image, error is:"+err.toString()
+                    }
+                    
                 }              
             }
         } 
         stage('Uploading Image') {
           steps{    
                script {
-                  docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push()
-                  } 
+                  try{ 
+                      docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                      }
+                  } catch (Execption err){
+                      echo "problem in uploading image, error is:"+err.toString()
+                  }
                }
           }
         }
@@ -48,7 +57,7 @@ pipeline {
                         }
                     }
                     catch(Exception err){
-                        echo "error in "+err.toString()
+                        echo "problem in deployment, error is:"+err.toString()
                     }
                 }
             }
