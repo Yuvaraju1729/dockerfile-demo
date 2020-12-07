@@ -34,7 +34,7 @@ pipeline {
                     try{
                         docker.withRegistry( '', registryCredential ) {    
                             sh "chmod +x -R ${env.WORKSPACE}"
-                            sh './deployscript.sh' 'appnode' "${dockerRep}" "${BUILD_NUMBER}"
+                            sh './deployscript.sh' 'appnode' "${dockerRepo}" "${BUILD_NUMBER}"
                         }
                     }
                     catch(Exception err){
