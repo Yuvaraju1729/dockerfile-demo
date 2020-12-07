@@ -13,7 +13,7 @@ pipeline {
                         def dockerHome = tool 'docker-runner'
                         env.PATH = "${dockerHome}/bin:${env.PATH}"
                         dockerImage = docker.build dockerRepo+":${BUILD_NUMBER}"
-                    }catch (Execption err){
+                    } catch (Execption err){
                       echo "problem in building image, error is:"+err.toString()
                     }
                     
