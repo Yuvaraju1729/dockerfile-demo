@@ -32,7 +32,7 @@ pipeline {
                 script { 
                     docker.withRegistry( '', registryCredential ) {    
                         sh '''
-                            if [ $(docker ps -qf "name=appnode") ]
+                            if [ $(docker ps -aqf "name=appnode") ]
                             then
                                 echo "from if block"
                                 docker kill appnode && docker rm appnode
