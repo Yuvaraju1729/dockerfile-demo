@@ -30,6 +30,7 @@ pipeline {
                 	
                 //withCredentials([usernamePassword(credentialsId: 'uv-docker-hub-creds', passwordVariable: 'pwd', usernameVariable: 'user')]) {
                                             //docker login --username "${user}" --password "${pwd}" 'https://index.docker.io/v1/'
+                // adding testing comment
                 script { 
                     try{
                         docker.withRegistry( '', registryCredential ) {    
